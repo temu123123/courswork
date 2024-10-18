@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: AdminService
+
+  datasource:
+    url: jdbc:postgresql://localhost:5436/root
+    username: root
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+grpc:
+  client:
+    hotelService:
+      address: "static://localhost:9097"
+      negotiation-type: "plaintext"
+    cityService:
+      address: "static://localhost:9097"
+      negotiation-type: "plaintext"
+    countryService:
+      address: "static://localhost:9097"
+      negotiation-type: "plaintext"
+    roomService:
+      address: "static://localhost:9097"
+      negotiation-type: "plaintext"
+    bookingService:
+      address: "static://localhost:9099"
+      negotiation-type: "plaintext"
+
+server:
+  port: 8082

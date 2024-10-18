@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package hotels;
+
+import "google/protobuf/empty.proto";
+
+service ProtoCityService {
+    rpc GetCityById (ProtoGetCityByIdRequest) returns (ProtoCity);
+    rpc GetAllCities (google.protobuf.Empty) returns (ProtoGetAllCitiesResponse);
+    rpc AddCity (ProtoAddCityRequest) returns (ProtoCity);
+    rpc UpdateCity (ProtoUpdateCityRequest) returns (ProtoCity);
+    rpc DeleteCity (ProtoDeleteCityRequest) returns (google.protobuf.Empty);
+}
+
+message ProtoGetCityByIdRequest {
+    int64 id = 1;
+}
+
+message ProtoGetAllCitiesResponse {
+    repeated ProtoCity cities = 1;
+}
+
+message ProtoAddCityRequest {
+    ProtoCityRequest request = 1;
+}
+
+message ProtoCityRequest {
+    string name = 1;
+    string description = 2;
+    int64 country_id = 3;
+}
+
+message ProtoUpdateCityRequest {
+    int64 id = 1;
+    ProtoCityRequest city = 2;
+}
+
+message ProtoDeleteCityRequest {
+    int64 id = 1;
+}
+
+message ProtoCity {
+    int64 id = 1;
+    int64 country_id = 2;
+    string name = 3;
+    string description = 4;
+}

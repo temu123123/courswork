@@ -1,0 +1,6 @@
+rootProject.name = 'Coursework'
+include 'AdminService'
+include 'HotelService'
+include 'HotelBookingService'
+include 'Common'
+

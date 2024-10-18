@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package bookings;
+
+import "google/protobuf/empty.proto";
+
+service ProtoBookingService {
+    rpc GetBookingById (ProtoGetBookingByIdRequest) returns (ProtoBooking);
+    rpc GetAllBookings (google.protobuf.Empty) returns (ProtoGetAllBookingsResponse);
+    rpc AddBooking (ProtoAddBookingRequest) returns (ProtoBooking);
+    rpc UpdateBooking (ProtoUpdateBookingRequest) returns (ProtoBooking);
+    rpc DeleteBooking (ProtoDeleteBookingRequest) returns (google.protobuf.Empty);
+}
+
+message ProtoGetBookingByIdRequest {
+    int64 id = 1;
+}
+
+message ProtoGetAllBookingsResponse {
+    repeated ProtoBooking bookings = 1;
+}
+
+message ProtoAddBookingRequest {
+    ProtoBookingRequest request = 1;
+}
+
+message ProtoBookingRequest {
+    int64 hotel_id = 1;
+    string start_date = 2;
+    string end_date = 3;
+    int64 room_id = 4;
+}
+
+message ProtoUpdateBookingRequest {
+    int64 id = 1;
+    ProtoBookingRequest booking = 2;
+}
+
+message ProtoDeleteBookingRequest {
+    int64 id = 1;
+}
+
+message ProtoBooking {
+    int64 id = 1;
+    int64 hotel_id = 2;
+    string start_date = 3;
+    string end_date = 4;
+    int64 room_id = 5;
+}

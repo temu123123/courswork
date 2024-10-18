@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package hotels;
+
+import "google/protobuf/empty.proto";
+
+service ProtoRoomService {
+    rpc GetRoomById (ProtoGetRoomByIdRequest) returns (ProtoRoom);
+    rpc GetAllRooms (ProtoGetAllRoomsRequest) returns (ProtoGetAllRoomsResponse);
+    rpc AddRoom (ProtoAddRoomRequest) returns (ProtoRoom);
+    rpc UpdateRoom (ProtoUpdateRoomRequest) returns (ProtoRoom);
+    rpc DeleteRoom (ProtoDeleteRoomRequest) returns (google.protobuf.Empty);
+}
+
+message ProtoGetRoomByIdRequest {
+    int64 hotel_id = 1;
+    int64 id = 2;
+}
+
+message ProtoGetAllRoomsRequest {
+    int64 hotel_id = 1;
+}
+
+message ProtoGetAllRoomsResponse {
+    repeated ProtoRoom rooms = 1;
+}
+
+message ProtoAddRoomRequest {
+    int64 hotel_id = 1;
+    ProtoRoomRequest request = 2;
+}
+
+message ProtoRoomRequest {
+    string type = 1;
+    int64 price = 2;
+    bool is_available = 3;
+}
+
+message ProtoUpdateRoomRequest {
+    int64 hotel_id = 1;
+    int64 id = 2;
+    ProtoRoomRequest room = 3;
+}
+
+message ProtoDeleteRoomRequest {
+    int64 hotel_id = 1;
+    int64 id = 2;
+}
+
+message ProtoRoom {
+    int64 id = 1;
+    int64 hotel_id = 2;
+    string type = 3;
+    int64 price = 4;
+    bool is_available = 5;
+}
