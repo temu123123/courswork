@@ -22,6 +22,10 @@ public class BookingRequest {
     @NotBlank(message = "The end date can't be blank!")
     private String endDate;
 
+    @Schema(description = "User name in database", example = "8")
+    @NotNull(message = "User name can't be null!")
+    private String username;
+
     @Schema(description = "Room id in database", example = "21")
     @NotNull(message = "The Room id can't be null!")
     private Long roomId;

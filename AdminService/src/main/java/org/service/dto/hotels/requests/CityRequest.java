@@ -3,6 +3,7 @@ package org.service.dto.hotels.requests;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -20,6 +21,7 @@ public class CityRequest {
     @NotBlank(message = "Description of the city can't be blank!")
     private String description;
 
+    @Positive(message = "Country id should be positive")
     @Schema(description = "Country id in database", example = "2")
     @NotNull(message = "Country id can't be blank!")
     private Long countryId;

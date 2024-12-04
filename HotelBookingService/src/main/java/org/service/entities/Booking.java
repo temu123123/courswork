@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
 
@@ -34,6 +33,9 @@ public class Booking {
 
     @Column(name = "end_date", nullable = false)
     private String endDate;
+
+    @Column(name = "username", nullable = false)
+    private String username;
 
     @Column(name = "room_id", nullable = false)
     private Long roomId;

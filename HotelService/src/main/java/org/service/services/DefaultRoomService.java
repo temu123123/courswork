@@ -29,9 +29,7 @@ public class DefaultRoomService implements RoomService {
                 .findFirst()
                 .orElseThrow(() -> new RoomNotFoundException("Room not found: id = " + id));
 
-        System.out.println("Room entity before mapping: " + roomEntity);
         RoomResponse response = mapper.EntityToResponse(roomEntity);
-        System.out.println("Room response after mapping: " + response);
 
         return response;
     }

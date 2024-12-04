@@ -7,6 +7,7 @@ import org.service.dto.BookingRequest;
 import org.service.dto.BookingResponse;
 import org.service.entities.Booking;
 import org.service.exceptions.BookingNotFoundException;
+import org.service.exceptions.RoomAlreadyBookedException;
 import org.service.kafka.BookingProducer;
 import org.service.mappers.BookingMapper;
 import org.springframework.stereotype.Service;
@@ -42,8 +43,15 @@ public class DefaultBookingService implements BookingService {
     @Override
     public BookingResponse addBooking(BookingRequest bookingRequest) {
         var bookingEntity = mapper.RequestToEntity(bookingRequest);
-        System.out.println("Booking request save: " + bookingRequest);
-        System.out.println("Booking entity before save: " + bookingEntity);
+        List<Booking> bookings = repository.findAll();
+
+        List<Long> existingRoomIds = bookings.stream()
+                .map(Booking::getRoomId)
+                .toList();
+        if (existingRoomIds.contains(bookingEntity.getRoomId())) {
+            throw new RoomAlreadyBookedException("Room with id" + bookingEntity.getRoomId() + " is already booked.");
+        }
+
         repository.save(bookingEntity);
         producer.sendMessage("bookingTopic", bookingEntity.getHotelId(), bookingEntity.getRoomId());
 

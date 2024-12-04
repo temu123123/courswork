@@ -2,6 +2,7 @@ package org.service.controllers.hotels;
 
 import hotel.Hotel;
 import hotel.Hotel.ProtoGetHotelByIdRequest;
+import hotel.Hotel.ProtoHotel;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -10,19 +11,12 @@ import org.service.dto.hotels.requests.HotelRequest;
 import org.service.dto.hotels.responses.HotelResponse;
 import org.service.grpc.hotels.HotelClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/admin/hotels")
 @RequiredArgsConstructor
@@ -40,7 +34,7 @@ public class HotelController {
         ProtoGetHotelByIdRequest request = ProtoGetHotelByIdRequest.newBuilder()
                 .setId(id)
                 .build();
-        Hotel.ProtoHotel protoHotel = hotelClient.getHotelById(request);
+        ProtoHotel protoHotel = hotelClient.getHotelById(request);
 
         HotelResponse response = new HotelResponse(
                 protoHotel.getId(),
@@ -82,7 +76,7 @@ public class HotelController {
                         .build())
                 .build();
 
-        Hotel.ProtoHotel protoHotel = hotelClient.addHotel(protoRequest);
+        ProtoHotel protoHotel = hotelClient.addHotel(protoRequest);
 
         HotelResponse response = new HotelResponse(
                 protoHotel.getId(),
@@ -102,7 +96,7 @@ public class HotelController {
     @PutMapping("/{id}")
     public ResponseEntity<HotelResponse> updateHotel(@PathVariable Long id, @RequestBody HotelRequest request) {
         Hotel.ProtoUpdateHotelRequest protoRequest = Hotel.ProtoUpdateHotelRequest.newBuilder()
-                .setHotel(Hotel.ProtoHotel.newBuilder()
+                .setHotel(ProtoHotel.newBuilder()
                         .setId(id)
                         .setCityId(request.getCityId())
                         .setName(request.getName())
@@ -110,7 +104,7 @@ public class HotelController {
                 .setId(id)
                 .build();
 
-        Hotel.ProtoHotel protoHotel = hotelClient.updateHotel(protoRequest);
+        ProtoHotel protoHotel = hotelClient.updateHotel(protoRequest);
 
         HotelResponse response = new HotelResponse(
                 protoHotel.getId(),

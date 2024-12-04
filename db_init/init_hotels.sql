@@ -9,14 +9,14 @@ CREATE TABLE city (
     name VARCHAR(255) NOT NULL,
     description TEXT,
     country_id INT NOT NULL,
-    CONSTRAINT fk_country FOREIGN KEY (country_id) REFERENCES country(id)
+    CONSTRAINT fk_country FOREIGN KEY (country_id) REFERENCES country(id) ON DELETE CASCADE
 );
 
 CREATE TABLE hotel (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     city_id INT NOT NULL,
-    CONSTRAINT fk_city FOREIGN KEY (city_id) REFERENCES city(id)
+    CONSTRAINT fk_city FOREIGN KEY (city_id) REFERENCES city(id) ON DELETE CASCADE
 );
 
 CREATE TABLE room (

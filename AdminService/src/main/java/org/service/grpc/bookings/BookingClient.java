@@ -11,6 +11,7 @@ import io.grpc.StatusRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.service.exceptions.BookingNotFoundException;
+import org.service.exceptions.RoomAlreadyBookedException;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -41,6 +42,9 @@ public class BookingClient {
     public ProtoBooking addBooking(ProtoAddBookingRequest request) {
         try {
             return blockingStub.addBooking(request);
+        } catch (RoomAlreadyBookedException e) {
+            log.error("Room already booked: {}", e.getMessage());
+            throw new RoomAlreadyBookedException("Room already booked");
         } catch (StatusRuntimeException e) {
             log.error("Error while adding booking: {}", e.getStatus().getDescription());
             throw e;

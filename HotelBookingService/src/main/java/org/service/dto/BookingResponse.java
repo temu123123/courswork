@@ -16,6 +16,9 @@ public record BookingResponse(
         @Schema(description = "Booking end date", example = "2024-10-09")
         String endDate,
 
+        @Schema(description = "User name", example = "John")
+        String username,
+
         @Schema(description = "Room id in database", example = "21")
         Long roomId
 ) {

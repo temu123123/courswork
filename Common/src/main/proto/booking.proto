@@ -28,7 +28,8 @@ message ProtoBookingRequest {
     int64 hotel_id = 1;
     string start_date = 2;
     string end_date = 3;
-    int64 room_id = 4;
+    string username = 4;
+    int64 room_id = 5;
 }
 
 message ProtoUpdateBookingRequest {
@@ -45,5 +46,6 @@ message ProtoBooking {
     int64 hotel_id = 2;
     string start_date = 3;
     string end_date = 4;
-    int64 room_id = 5;
+    string username = 5;
+    int64 room_id = 6;
 }

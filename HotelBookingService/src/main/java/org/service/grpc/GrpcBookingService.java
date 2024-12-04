@@ -17,6 +17,7 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import org.service.dto.BookingRequest;
 import org.service.dto.BookingResponse;
 import org.service.exceptions.BookingNotFoundException;
+import org.service.exceptions.RoomAlreadyBookedException;
 import org.service.services.BookingService;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class GrpcBookingService extends ProtoBookingServiceImplBase {
                 .setHotelId(booking.hotelId())
                 .setStartDate(booking.startDate())
                 .setEndDate(booking.endDate())
+                .setUsername(booking.username())
                 .setRoomId(booking.roomId())
                 .build();
     }
@@ -80,11 +82,15 @@ public class GrpcBookingService extends ProtoBookingServiceImplBase {
             bookingRequest.setHotelId(request.getRequest().getHotelId());
             bookingRequest.setStartDate(request.getRequest().getStartDate());
             bookingRequest.setEndDate(request.getRequest().getEndDate());
+            bookingRequest.setUsername(request.getRequest().getUsername());
             bookingRequest.setRoomId(request.getRequest().getRoomId());
             BookingResponse newBooking = service.addBooking(bookingRequest);
             ProtoBooking response = newResponse(newBooking);
             responseObserver.onNext(response);
             responseObserver.onCompleted();
+        } catch (RoomAlreadyBookedException e) {
+            log.error("Room already booked: {}", e.getMessage());
+            responseObserver.onError(Status.fromCode(Status.Code.CANCELLED).withDescription("Room already booked").asRuntimeException());
         } catch (Exception e) {
             log.error("Error while adding booking: {}", e.getMessage());
             responseObserver.onError(Status.INTERNAL.withDescription(e.getMessage()).asRuntimeException());
@@ -98,6 +104,7 @@ public class GrpcBookingService extends ProtoBookingServiceImplBase {
             bookingRequest.setHotelId(request.getBooking().getHotelId());
             bookingRequest.setStartDate(request.getBooking().getStartDate());
             bookingRequest.setEndDate(request.getBooking().getEndDate());
+            bookingRequest.setUsername(request.getBooking().getUsername());
             bookingRequest.setRoomId(request.getBooking().getRoomId());
             BookingResponse updatedBooking = service.updateBooking(request.getId(), bookingRequest);
             ProtoBooking response = newResponse(updatedBooking);

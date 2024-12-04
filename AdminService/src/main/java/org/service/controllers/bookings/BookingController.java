@@ -14,6 +14,7 @@ import org.service.dto.bookings.BookingRequest;
 import org.service.dto.bookings.BookingResponse;
 import org.service.grpc.bookings.BookingClient;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/admin/hotels/bookings")
 @RequiredArgsConstructor
@@ -48,6 +50,7 @@ public class BookingController {
                 protoBooking.getHotelId(),
                 protoBooking.getStartDate(),
                 protoBooking.getEndDate(),
+                protoBooking.getUsername(),
                 protoBooking.getRoomId()
         );
 
@@ -66,6 +69,7 @@ public class BookingController {
                         protoBooking.getHotelId(),
                         protoBooking.getStartDate(),
                         protoBooking.getEndDate(),
+                        protoBooking.getUsername(),
                         protoBooking.getRoomId()
                 ))
                 .toList();
@@ -85,6 +89,7 @@ public class BookingController {
                         .setHotelId(request.getHotelId())
                         .setStartDate(request.getStartDate())
                         .setEndDate(request.getEndDate())
+                        .setUsername(request.getUsername())
                         .setRoomId(request.getRoomId())
                         .build())
                 .build();
@@ -96,6 +101,7 @@ public class BookingController {
                 protoBooking.getHotelId(),
                 protoBooking.getStartDate(),
                 protoBooking.getEndDate(),
+                protoBooking.getUsername(),
                 protoBooking.getRoomId()
         );
 
@@ -115,6 +121,7 @@ public class BookingController {
                         .setHotelId(request.getHotelId())
                         .setStartDate(request.getStartDate())
                         .setEndDate(request.getEndDate())
+                        .setUsername(request.getUsername())
                         .setRoomId(request.getRoomId())
                         .build())
                 .build();
@@ -126,6 +133,7 @@ public class BookingController {
                 protoBooking.getHotelId(),
                 protoBooking.getStartDate(),
                 protoBooking.getEndDate(),
+                protoBooking.getUsername(),
                 protoBooking.getRoomId()
         );
 
